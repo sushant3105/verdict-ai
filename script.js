@@ -27,7 +27,7 @@ async function askAI() {
       return;
     }
 
-    box.textContent = data.reply || "No response from AI.";
+    box.innerHTML = data.reply || "No response from AI.";
   } catch (err) {
     console.error("Network / Fetch Error:", err);
     box.textContent = "Network error. See console.";
