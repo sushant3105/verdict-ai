@@ -23,11 +23,13 @@ module.exports = async (req, res) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
-        "HTTP-Referer": "https://your-app.vercel.app",
+        "HTTP-Referer": "https://your-app.vercel.app", // <-- change to your deployed URL
         "X-Title": "Verdict AI"
       },
       body: JSON.stringify({
-        model: "meta-llama/llama-3.1-8b-instruct:free",
+        // ✔ Your selected model:
+        model: "tngtech/deepseek-r1t2-chimera:free",
+
         messages: [
           {
             role: "system",
@@ -51,7 +53,9 @@ module.exports = async (req, res) => {
       });
     }
 
-    const reply = data.choices?.[0]?.message?.content || "No response.";
+    const reply =
+      data.choices?.[0]?.message?.content || "No response.";
+
     return res.status(200).json({ reply });
 
   } catch (err) {
