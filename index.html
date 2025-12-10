@@ -1,21 +1,2824 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Verdict AI – Legal Advisor</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verdict AI - Your Personal Legal Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.95)), url('https://images.unsplash.com/photo-1589391886085-8b6b0ac72a1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #f0f0f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(15, 34, 63, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 150, 255, 0.1);
+            min-height: 85vh;
+        }
+
+        .left-panel {
+            flex: 1;
+            padding: 40px;
+            background: rgba(10, 25, 47, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-panel {
+            flex: 1.4;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Login Screen Styles */
+        #loginScreen {
+            display: flex;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: #4a9eff;
+            margin-right: 15px;
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(to right, #4a9eff, #6c63ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: #a0c8ff;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .features {
+            margin-top: 20px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(74, 158, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: #4a9eff;
+            font-size: 1.2rem;
+        }
+
+        .feature-text h3 {
+            color: #ffffff;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .feature-text p {
+            color: #a0c8ff;
+            font-size: 0.9rem;
+        }
+
+        .login-form {
+            width: 100%;
+        }
+
+        .form-header {
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            color: #a0c8ff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4a9eff;
+        }
+
+        .input-with-icon input, .input-with-icon textarea, .input-with-icon select {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(100, 150, 255, 0.2);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .input-with-icon textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .input-with-icon input:focus, .input-with-icon textarea:focus, .input-with-icon select:focus {
+            outline: none;
+            border-color: #4a9eff;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 2px rgba(74, 158, 255, 0.2);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+        }
+
+        .forgot-password {
+            color: #4a9eff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: #6c63ff;
+            text-decoration: underline;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #4a9eff, #6c63ff);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: linear-gradient(to right, #3a8eef, #5b53ee);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 158, 255, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #4a9eff;
+            color: #4a9eff;
+        }
+
+        .btn-outline:hover {
+            background: rgba(74, 158, 255, 0.1);
+        }
+
+        .btn-small {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            width: auto;
+        }
+
+        .create-account {
+            text-align: center;
+            margin-top: 25px;
+            color: #a0c8ff;
+        }
+
+        .create-account a {
+            color: #4a9eff;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 5px;
+            transition: color 0.3s;
+        }
+
+        .create-account a:hover {
+            color: #6c63ff;
+            text-decoration: underline;
+        }
+
+        .stats-section {
+            background: rgba(10, 25, 47, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 40px;
+            border: 1px solid rgba(100, 150, 255, 0.1);
+        }
+
+        .stats-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .stats-header i {
+            font-size: 1.5rem;
+            color: #4a9eff;
+            margin-right: 10px;
+        }
+
+        .stats-header h3 {
+            color: #ffffff;
+            font-size: 1.3rem;
+        }
+
+        .stats-content {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .stat {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4a9eff;
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: #a0c8ff;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .legal-icons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            opacity: 0.7;
+        }
+
+        .legal-icon {
+            font-size: 2rem;
+            color: #4a9eff;
+        }
+
+        /* Dashboard Styles */
+        #dashboard {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(100, 150, 255, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(to right, #4a9eff, #6c63ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .user-details h3 {
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .user-details p {
+            color: #a0c8ff;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-main {
+            display: flex;
+            gap: 30px;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: rgba(10, 25, 47, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            color: #a0c8ff;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .nav-item i {
+            margin-right: 12px;
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .nav-item:hover {
+            background: rgba(74, 158, 255, 0.1);
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            background: rgba(74, 158, 255, 0.2);
+            color: #4a9eff;
+            font-weight: 600;
+        }
+
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-header {
+            margin-bottom: 30px;
+        }
+
+        .content-header h2 {
+            color: #ffffff;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .content-header p {
+            color: #a0c8ff;
+        }
+
+        .content-card {
+            background: rgba(10, 25, 47, 0.6);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(100, 150, 255, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .content-card h3 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+
+        .content-card h3 i {
+            margin-right: 10px;
+            color: #4a9eff;
+        }
+
+        .case-type-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .case-type {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(100, 150, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .case-type:hover {
+            background: rgba(74, 158, 255, 0.1);
+            border-color: #4a9eff;
+            transform: translateY(-5px);
+        }
+
+        .case-type.active {
+            background: rgba(74, 158, 255, 0.2);
+            border-color: #4a9eff;
+        }
+
+        .case-type i {
+            font-size: 2rem;
+            color: #4a9eff;
+            margin-bottom: 10px;
+        }
+
+        .case-type h4 {
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .case-type p {
+            color: #a0c8ff;
+            font-size: 0.9rem;
+        }
+
+        .ai-response {
+            background: rgba(10, 25, 47, 0.8);
+            border-radius: 10px;
+            padding: 25px;
+            border-left: 4px solid #4a9eff;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .ai-response h4 {
+            color: #4a9eff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .ai-response h4 i {
+            margin-right: 10px;
+        }
+
+        .ai-section {
+            margin-bottom: 25px;
+        }
+
+        .ai-section-title {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .ai-section-title i {
+            color: #4a9eff;
+            margin-right: 8px;
+        }
+
+        .ai-section-content {
+            color: #d1e3ff;
+            line-height: 1.6;
+            padding-left: 25px;
+        }
+
+        .ai-section-content ul {
+            margin-left: 20px;
+        }
+
+        .ai-section-content li {
+            margin-bottom: 8px;
+        }
+
+        .similar-case {
+            background: rgba(74, 158, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .similar-case h5 {
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .similar-case p {
+            color: #a0c8ff;
+            font-size: 0.9rem;
+        }
+
+        .evidence-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .evidence-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .evidence-item h5 {
+            color: #ffffff;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .evidence-item h5 i {
+            margin-right: 8px;
+            color: #4a9eff;
+        }
+
+        .evidence-item p {
+            color: #a0c8ff;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: #a0c8ff;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            color: #4a9eff;
+            margin-bottom: 15px;
+        }
+
+        .typing {
+            display: inline-block;
+        }
+
+        .typing span {
+            display: inline-block;
+            animation: typing 1.5s infinite;
+            margin-left: 2px;
+        }
+
+        .typing span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .case-history {
+            margin-top: 30px;
+        }
+
+        .history-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 3px solid #4a9eff;
+        }
+
+        .history-info h5 {
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .history-info p {
+            color: #a0c8ff;
+            font-size: 0.9rem;
+        }
+
+        .history-date {
+            color: #a0c8ff;
+            font-size: 0.9rem;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: rgba(15, 34, 63, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid rgba(100, 150, 255, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            color: #ffffff;
+            font-size: 1.5rem;
+        }
+
+        .close-modal {
+            color: #a0c8ff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #ffffff;
+        }
+
+        .modal-text {
+            color: #a0c8ff;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* OTP Verification Styles */
+        .otp-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .otp-modal-content {
+            background: rgba(15, 34, 63, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid rgba(100, 150, 255, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .otp-modal-header {
+            margin-bottom: 30px;
+        }
+
+        .otp-modal-header h3 {
+            color: #ffffff;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .otp-modal-header p {
+            color: #a0c8ff;
+        }
+
+        .otp-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #a0c8ff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .otp-modal-close:hover {
+            color: #ffffff;
+        }
+
+        .otp-inputs {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .otp-input {
+            width: 50px;
+            height: 60px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border: 2px solid #4a9eff;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .otp-input:focus {
+            outline: none;
+            border-color: #6c63ff;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.2);
+        }
+
+        .otp-input.filled {
+            background: rgba(74, 158, 255, 0.2);
+        }
+
+        .otp-timer {
+            font-size: 14px;
+            color: #a0c8ff;
+            margin: 10px 0;
+        }
+
+        .otp-timer.expiring {
+            color: #ff6b6b;
+            animation: pulse 1s infinite;
+        }
+
+        .resend-otp {
+            color: #4a9eff;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 15px;
+            display: inline-block;
+            transition: color 0.3s;
+        }
+
+        .resend-otp:hover {
+            color: #6c63ff;
+            text-decoration: underline;
+        }
+
+        .resend-otp.disabled {
+            color: #718096;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .otp-verified {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: rgba(74, 158, 255, 0.1);
+            border-radius: 10px;
+            margin: 20px 0;
+            animation: fadeIn 0.5s;
+        }
+
+        .otp-success-icon {
+            font-size: 48px;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        .back-to-login {
+            display: inline-block;
+            margin-top: 20px;
+            color: #4a9eff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .back-to-login:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            max-width: 300px;
+        }
+
+        .notification.error {
+            background: #f44336;
+            color: white;
+        }
+
+        .notification.success {
+            background: #4CAF50;
+            color: white;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* Responsive design */
+        @media (max-width: 1100px) {
+            .dashboard-main {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 15px;
+            }
+            
+            .nav-item {
+                white-space: nowrap;
+                margin-right: 10px;
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .left-panel, .right-panel {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .left-panel, .right-panel {
+                padding: 20px;
+            }
+            
+            .stats-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .case-type-selector {
+                grid-template-columns: 1fr;
+            }
+            
+            .otp-inputs {
+                gap: 5px;
+            }
+            
+            .otp-input {
+                width: 40px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- OTP Verification Modal -->
+    <div class="otp-modal" id="otpModal">
+        <div class="otp-modal-content">
+            <span class="otp-modal-close" id="closeOtpModal">&times;</span>
+            <div class="otp-modal-header">
+                <h3><i class="fas fa-shield-alt"></i> OTP Verification</h3>
+                <p>Enter the 6-digit code sent to your email</p>
+            </div>
+            
+            <div class="otp-inputs" id="otpInputsContainer">
+                <input type="text" maxlength="1" class="otp-input" data-index="0">
+                <input type="text" maxlength="1" class="otp-input" data-index="1">
+                <input type="text" maxlength="1" class="otp-input" data-index="2">
+                <input type="text" maxlength="1" class="otp-input" data-index="3">
+                <input type="text" maxlength="1" class="otp-input" data-index="4">
+                <input type="text" maxlength="1" class="otp-input" data-index="5">
+            </div>
+            
+            <div class="otp-timer" id="otpTimer">
+                Code expires in: <span id="timer">10:00</span>
+            </div>
+            
+            <button class="btn" id="verifyOtpBtn" style="margin-top: 20px;">
+                <i class="fas fa-check-circle"></i> Verify OTP
+            </button>
+            
+            <div class="resend-otp disabled" id="resendOtp">
+                Didn't receive code? Resend OTP
+            </div>
+            
+            <div class="back-to-login" id="backToLogin">
+                <i class="fas fa-arrow-left"></i> Back to Login
+            </div>
+        </div>
+    </div>
+    
+    <!-- OTP Verified Success Message -->
+    <div class="otp-verified" id="otpVerified">
+        <div class="otp-success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h3>Verification Successful!</h3>
+        <p>Your email has been verified. Redirecting to dashboard...</p>
+    </div>
 
-  <div class="container">
-    <h1>⚖️ Verdict AI – Legal Advisor</h1>
+    <!-- Login Screen -->
+    <div class="container" id="loginScreen">
+        <div class="left-panel">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+                <h1>Verdict AI</h1>
+            </div>
+            
+            <p class="tagline">Your personal AI legal assistant. Get strategic advice, evidence collection guidance, and winning strategies for your legal cases based on analysis of previous similar cases.</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Case Analysis</h3>
+                        <p>Analyzes previous similar cases to provide winning strategies</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Evidence Guidance</h3>
+                        <p>Tells you what evidence to collect to strengthen your case</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Strategy Recommendations</h3>
+                        <p>Provides personalized legal strategies based on your situation</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="legal-icons">
+                <i class="fas fa-balance-scale-left legal-icon"></i>
+                <i class="fas fa-book-law legal-icon"></i>
+                <i class="fas fa-landmark legal-icon"></i>
+                <i class="fas fa-file-contract legal-icon"></i>
+            </div>
+        </div>
+        
+        <!-- Right Panel - Login Form & Stats -->
+        <div class="right-panel">
+            <div class="form-header">
+                <h2>Welcome Back</h2>
+                <p>Sign in to your Verdict AI account</p>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="lawyer@example.com" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Enter your password" required>
+                    </div>
+                </div>
+                
+                <div class="form-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password" id="forgotPassword">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+            
+            <div class="create-account">
+                <span>Don't have an account?</span>
+                <a href="#" id="createAccount">Create your account</a>
+            </div>
+            
+            <div class="stats-section">
+                <div class="stats-header">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Verdict AI Case Analysis</h3>
+                </div>
+                <div class="stats-content">
+                    <div class="stat">
+                        <div class="stat-value" id="totalCases">12,847</div>
+                        <div class="stat-label">Total Cases Analyzed</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="successRate">87%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="todayCases">143</div>
+                        <div class="stat-label">Analyzed Today</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dashboard -->
+    <div class="container" id="dashboard">
+        <div class="dashboard-header">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <h3 id="userName">John Doe</h3>
+                    <p>Legal Advisor</p>
+                </div>
+            </div>
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+        
+        <div class="dashboard-main">
+            <div class="sidebar">
+                <a href="#" class="nav-item active" id="navAnalyze">
+                    <i class="fas fa-search"></i> Analyze Case
+                </a>
+                <a href="#" class="nav-item" id="navHistory">
+                    <i class="fas fa-history"></i> Case History
+                </a>
+                <a href="#" class="nav-item" id="navStrategies">
+                    <i class="fas fa-chess"></i> Winning Strategies
+                </a>
+                <a href="#" class="nav-item" id="navEvidence">
+                    <i class="fas fa-folder-open"></i> Evidence Guide
+                </a>
+                <a href="#" class="nav-item" id="navSettings">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </div>
+            
+            <div class="content-area">
+                <!-- Case Analysis Content -->
+                <div id="analyzeContent" class="content-section">
+                    <div class="content-header">
+                        <h2>Case Analysis</h2>
+                        <p>Describe your legal situation and get AI-powered advice</p>
+                    </div>
+                    
+                    <div class="content-card">
+                        <h3><i class="fas fa-edit"></i> Describe Your Case</h3>
+                        <div class="form-group">
+                            <label for="caseType">Case Type</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-gavel"></i>
+                                <select id="caseType">
+                                    <option value="">Select case type...</option>
+                                    <option value="civil">Civil Dispute</option>
+                                    <option value="criminal">Criminal Case</option>
+                                    <option value="family">Family Law</option>
+                                    <option value="property">Property Dispute</option>
+                                    <option value="employment">Employment Law</option>
+                                    <option value="contract">Contract Breach</option>
+                                    <option value="personal_injury">Personal Injury</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="caseDescription">Case Details</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-file-alt"></i>
+                                <textarea id="caseDescription" placeholder="Describe your legal situation in detail. Include relevant facts, parties involved, timeline, and your objectives."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="yourRole">Your Role in the Case</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user-tie"></i>
+                                <select id="yourRole">
+                                    <option value="">Select your role...</option>
+                                    <option value="plaintiff">Plaintiff (Filing the case)</option>
+                                    <option value="defendant">Defendant (Case filed against you)</option>
+                                    <option value="lawyer">Legal Representative</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button class="btn" id="analyzeBtn">
+                            <i class="fas fa-robot"></i> Analyze Case with Verdict AI
+                        </button>
+                    </div>
+                    
+                    <div id="aiResponse" class="content-card" style="display: none;">
+                        <h3><i class="fas fa-robot"></i> Verdict AI Analysis</h3>
+                        <div id="responseContent"></div>
+                    </div>
+                </div>
+                
+                <!-- Case History Content -->
+                <div id="historyContent" class="content-section" style="display: none;">
+                    <div class="content-header">
+                        <h2>Case History</h2>
+                        <p>Your previously analyzed cases</p>
+                    </div>
+                    
+                    <div class="content-card">
+                        <h3><i class="fas fa-history"></i> Recent Cases</h3>
+                        <div id="caseHistoryList">
+                            <!-- Cases will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Winning Strategies Content -->
+                <div id="strategiesContent" class="content-section" style="display: none;">
+                    <div class="content-header">
+                        <h2>Winning Strategies</h2>
+                        <p>Proven legal strategies for different case types</p>
+                    </div>
+                    
+                    <div class="content-card">
+                        <h3><i class="fas fa-chess-queen"></i> Strategy Library</h3>
+                        <div class="case-type-selector" id="strategyTypes">
+                            <!-- Strategy types will be populated by JS -->
+                        </div>
+                        
+                        <div id="strategyContent" class="ai-response">
+                            <!-- Strategy content will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Evidence Guide Content -->
+                <div id="evidenceContent" class="content-section" style="display: none;">
+                    <div class="content-header">
+                        <h2>Evidence Collection Guide</h2>
+                        <p>What evidence to collect for different case types</p>
+                    </div>
+                    
+                    <div class="content-card">
+                        <h3><i class="fas fa-folder-open"></i> Evidence Guide</h3>
+                        <div class="case-type-selector" id="evidenceTypes">
+                            <!-- Evidence types will be populated by JS -->
+                        </div>
+                        
+                        <div id="evidenceGuideContent" class="ai-response">
+                            <!-- Evidence guide will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Settings Content -->
+                <div id="settingsContent" class="content-section" style="display: none;">
+                    <div class="content-header">
+                        <h2>Settings</h2>
+                        <p>Manage your Verdict AI account</p>
+                    </div>
+                    
+                    <div class="content-card">
+                        <h3><i class="fas fa-user-cog"></i> Account Settings</h3>
+                        <div class="form-group">
+                            <label for="settingsName">Full Name</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="settingsName" placeholder="Your full name">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="settingsEmail">Email Address</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="settingsEmail" placeholder="Your email">
+                            </div>
+                        </div>
+                        
+                        <button class="btn" id="saveSettingsBtn">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Forgot Password Modal -->
+    <div class="modal" id="forgotPasswordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Reset Your Password</h3>
+                <span class="close-modal" id="closeModal">&times;</span>
+            </div>
+            <p class="modal-text">Enter your email address and we'll send you instructions to reset your password.</p>
+            
+            <div class="form-group">
+                <label for="resetEmail">Email Address</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="resetEmail" placeholder="lawyer@example.com" required>
+                </div>
+            </div>
+            
+            <button class="btn" id="sendResetBtn">Send Reset Instructions</button>
+        </div>
+    </div>
+    
+    <!-- Create Account Modal -->
+    <div class="modal" id="createAccountModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create Your Account</h3>
+                <span class="close-modal" id="closeCreateModal">&times;</span>
+            </div>
+            <p class="modal-text">Join Verdict AI today and get personalized legal assistance for your cases.</p>
+            
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="fullName" placeholder="John Smith" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="newEmail">Email Address</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="newEmail" placeholder="lawyer@example.com" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="newPassword">Password</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="newPassword" placeholder="Create a strong password" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                </div>
+            </div>
+            
+            <button class="btn" id="createAccountBtn">Create Account</button>
+        </div>
+    </div>
 
-    <textarea id="userInput" placeholder="Describe your case..."></textarea>
-    <button onclick="askAI()">Get Advice</button>
+    <script>
+        // ============================================
+        // DOM Elements
+        // ============================================
+        const loginScreen = document.getElementById('loginScreen');
+        const dashboard = document.getElementById('dashboard');
+        const loginForm = document.getElementById('loginForm');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const loginBtn = document.getElementById('loginBtn');
+        
+        // Dashboard navigation
+        const navAnalyze = document.getElementById('navAnalyze');
+        const navHistory = document.getElementById('navHistory');
+        const navStrategies = document.getElementById('navStrategies');
+        const navEvidence = document.getElementById('navEvidence');
+        const navSettings = document.getElementById('navSettings');
+        
+        // Content sections
+        const analyzeContent = document.getElementById('analyzeContent');
+        const historyContent = document.getElementById('historyContent');
+        const strategiesContent = document.getElementById('strategiesContent');
+        const evidenceContent = document.getElementById('evidenceContent');
+        const settingsContent = document.getElementById('settingsContent');
+        
+        // Case analysis elements
+        const caseType = document.getElementById('caseType');
+        const caseDescription = document.getElementById('caseDescription');
+        const yourRole = document.getElementById('yourRole');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const aiResponse = document.getElementById('aiResponse');
+        const responseContent = document.getElementById('responseContent');
+        
+        // Stats elements
+        const totalCasesEl = document.getElementById('totalCases');
+        const successRateEl = document.getElementById('successRate');
+        const todayCasesEl = document.getElementById('todayCases');
+        
+        // Case history
+        const caseHistoryList = document.getElementById('caseHistoryList');
+        
+        // Strategy and evidence selectors
+        const strategyTypes = document.getElementById('strategyTypes');
+        const strategyContent = document.getElementById('strategyContent');
+        const evidenceTypes = document.getElementById('evidenceTypes');
+        const evidenceGuideContent = document.getElementById('evidenceGuideContent');
+        
+        // Settings
+        const settingsName = document.getElementById('settingsName');
+        const settingsEmail = document.getElementById('settingsEmail');
+        const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+        
+        // Modals
+        const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+        const createAccountModal = document.getElementById('createAccountModal');
+        
+        // OTP Elements
+        const otpModal = document.getElementById('otpModal');
+        const closeOtpModal = document.getElementById('closeOtpModal');
+        const otpInputs = document.querySelectorAll('.otp-input');
+        const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+        const resendOtp = document.getElementById('resendOtp');
+        const backToLogin = document.getElementById('backToLogin');
+        const otpTimer = document.getElementById('otpTimer');
+        const timerDisplay = document.getElementById('timer');
+        const otpVerified = document.getElementById('otpVerified');
+        
+        // ============================================
+        // App State
+        // ============================================
+        let currentUser = null;
+        let caseHistory = [];
+        let caseIdCounter = 1;
+        
+        // OTP State
+        let currentOtp = '';
+        let otpExpiryTime = null;
+        let otpTimerInterval = null;
+        let canResendOtp = false;
+        let userEmailForOtp = '';
+        let isPasswordReset = false;
+        
+        // Legal case database - simulated AI knowledge base
+        const legalDatabase = {
+            civil: {
+                name: "Civil Dispute",
+                strategies: [
+                    "Focus on establishing clear breach of duty or contract",
+                    "Document all financial losses with receipts and records",
+                    "Consider mediation before litigation to save costs",
+                    "Gather witness testimonies to support your claims",
+                    "Request discovery of opponent's relevant documents"
+                ],
+                evidence: [
+                    { name: "Contract Documents", importance: "Critical", description: "Signed agreements, terms of service, or written promises" },
+                    { name: "Financial Records", importance: "High", description: "Bank statements, invoices, receipts showing losses" },
+                    { name: "Communication Records", importance: "High", description: "Emails, text messages, letters discussing the matter" },
+                    { name: "Witness Statements", importance: "Medium", description: "Written or recorded testimonies from relevant parties" },
+                    { name: "Photographic Evidence", importance: "Medium", description: "Photos of property damage, defective products, etc." }
+                ],
+                similarCases: [
+                    { title: "Smith v. Johnson Contract Breach", outcome: "Plaintiff won $50,000 in damages", year: 2022 },
+                    { title: "Miller Property Dispute", outcome: "Settled with mediation, plaintiff received property rights", year: 2021 },
+                    { title: "Davis v. Corporation LLC", outcome: "Defendant won, lack of evidence from plaintiff", year: 2023 }
+                ]
+            },
+            criminal: {
+                name: "Criminal Case",
+                strategies: [
+                    "Establish alibi with timestamped evidence",
+                    "Challenge the prosecution's evidence chain of custody",
+                    "File motions to suppress illegally obtained evidence",
+                    "Negotiate plea bargain if evidence is strong against you",
+                    "Focus on reasonable doubt in jury trials"
+                ],
+                evidence: [
+                    { name: "Alibi Evidence", importance: "Critical", description: "Proof of your whereabouts at time of crime" },
+                    { name: "Witness Testimonies", importance: "High", description: "Statements from people who can vouch for you" },
+                    { name: "Surveillance Footage", importance: "High", description: "CCTV, dashcam, or other video evidence" },
+                    { name: "Forensic Reports", importance: "Medium", description: "DNA analysis, fingerprint reports, digital forensics" },
+                    { name: "Character References", importance: "Medium", description: "Letters from reputable people about your character" }
+                ],
+                similarCases: [
+                    { title: "State v. Thompson Burglary", outcome: "Not guilty - alibi proved defendant was out of town", year: 2022 },
+                    { title: "People v. Rodriguez Assault", outcome: "Plea bargain - reduced sentence in exchange for testimony", year: 2021 },
+                    { title: "State v. Williams Fraud", outcome: "Guilty - digital evidence was overwhelming", year: 2023 }
+                ]
+            },
+            family: {
+                name: "Family Law",
+                strategies: [
+                    "Prioritize child's best interests in custody cases",
+                    "Document all financial contributions and expenses",
+                    "Consider collaborative law to reduce conflict",
+                    "Keep detailed parenting time logs",
+                    "Gather evidence of any inappropriate behavior"
+                ],
+                evidence: [
+                    { name: "Financial Documents", importance: "Critical", description: "Tax returns, pay stubs, bank statements for support calculations" },
+                    { name: "Parenting Records", importance: "High", description: "Logs of time spent with children, school involvement" },
+                    { name: "Communication Records", importance: "High", description: "Texts, emails showing cooperation or conflict" },
+                    { name: "Property Documents", importance: "Medium", description: "Deeds, mortgage statements, property valuations" },
+                    { name: "Witness Statements", importance: "Medium", description: "Testimonies from teachers, family friends, counselors" }
+                ],
+                similarCases: [
+                    { title: "Johnson Divorce & Custody", outcome: "Joint custody with primary residence to mother", year: 2022 },
+                    { title: "Martinez Child Support", outcome: "Father ordered to pay $1200/month based on income", year: 2021 },
+                    { title: "Thompson v. Thompson Alimony", outcome: "Temporary alimony awarded for 2 years", year: 2023 }
+                ]
+            },
+            property: {
+                name: "Property Dispute",
+                strategies: [
+                    "Obtain professional property valuation",
+                    "Research property history and previous disputes",
+                    "Document all improvements made to the property",
+                    "Consider adverse possession claims if applicable",
+                    "Check zoning laws and property restrictions"
+                ],
+                evidence: [
+                    { name: "Property Deeds", importance: "Critical", description: "Official documents showing ownership history" },
+                    { name: "Survey Reports", importance: "High", description: "Professional land surveys showing boundaries" },
+                    { name: "Photographic Evidence", importance: "High", description: "Photos of property, boundaries, improvements" },
+                    { name: "Payment Records", importance: "Medium", description: "Receipts for property taxes, maintenance, improvements" },
+                    { name: "Witness Statements", importance: "Medium", description: "Neighbors, previous owners who know property history" }
+                ],
+                similarCases: [
+                    { title: "Easement Dispute - Green v. Brown", outcome: "Easement rights established for driveway access", year: 2022 },
+                    { title: "Boundary Dispute - Wilson v. Lee", outcome: "Survey proved boundary, defendant had to remove fence", year: 2021 },
+                    { title: "Adverse Possession Claim", outcome: "Claim failed - not enough years of continuous possession", year: 2023 }
+                ]
+            }
+        };
+        
+        // ============================================
+        // API Integration Functions
+        // ============================================
+        
+        async function askAI(prompt) {
+            try {
+                const response = await fetch("/api/ask", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ prompt: prompt }),
+                });
 
-    <div id="response" class="response"></div>
-  </div>
+                const data = await response.json();
 
-  <script src="script.js"></script>
+                if (!response.ok) {
+                    console.error("API Error:", data.error);
+                    return { error: data.error || "Unknown error from Perplexity API" };
+                }
+
+                return { reply: data.reply || "No response from AI." };
+            } catch (err) {
+                console.error("Network / Fetch Error:", err);
+                return { error: "Network error. Please check your connection." };
+            }
+        }
+        
+        // ============================================
+        // Main Application Functions
+        // ============================================
+        
+        // Initialize the application
+        function initApp() {
+            // Load case history from localStorage if available
+            const savedHistory = localStorage.getItem('verdictAI_caseHistory');
+            if (savedHistory) {
+                caseHistory = JSON.parse(savedHistory);
+                if (caseHistory.length > 0) {
+                    caseIdCounter = Math.max(...caseHistory.map(c => c.id)) + 1;
+                }
+            }
+            
+            // Load user data if available
+            const savedUser = localStorage.getItem('verdictAI_currentUser');
+            const isVerified = localStorage.getItem('verdictAI_isVerified') === 'true';
+            const rememberMe = localStorage.getItem('verdictAI_rememberMe') === 'true';
+            
+            if (savedUser && rememberMe && isVerified) {
+                currentUser = JSON.parse(savedUser);
+                showDashboard();
+            }
+            
+            // Populate strategy types
+            populateStrategyTypes();
+            
+            // Populate evidence types
+            populateEvidenceTypes();
+            
+            // Update case history display
+            updateCaseHistoryDisplay();
+            
+            // Animate stats
+            animateStats();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Initialize OTP event listeners
+            setupOTPEventListeners();
+        }
+        
+        // Set up OTP event listeners
+        function setupOTPEventListeners() {
+            // Handle OTP input
+            otpInputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    const value = e.target.value;
+                    
+                    // Only allow numbers
+                    if (!/^\d*$/.test(value)) {
+                        e.target.value = '';
+                        return;
+                    }
+                    
+                    if (value) {
+                        e.target.classList.add('filled');
+                        
+                        // Auto-focus next input
+                        if (index < otpInputs.length - 1) {
+                            otpInputs[index + 1].focus();
+                        }
+                    } else {
+                        e.target.classList.remove('filled');
+                    }
+                    
+                    // Enable verify button if all inputs are filled
+                    const allFilled = Array.from(otpInputs).every(input => input.value);
+                    verifyOtpBtn.disabled = !allFilled;
+                });
+                
+                // Handle backspace
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !input.value && index > 0) {
+                        otpInputs[index - 1].focus();
+                        otpInputs[index - 1].value = '';
+                        otpInputs[index - 1].classList.remove('filled');
+                    }
+                });
+                
+                // Handle paste
+                input.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const pastedData = e.clipboardData.getData('text').trim();
+                    
+                    if (/^\d{6}$/.test(pastedData)) {
+                        // Split the pasted OTP into individual inputs
+                        for (let i = 0; i < Math.min(pastedData.length, otpInputs.length); i++) {
+                            otpInputs[i].value = pastedData[i];
+                            otpInputs[i].classList.add('filled');
+                        }
+                        
+                        // Focus the last input
+                        const lastIndex = Math.min(pastedData.length - 1, otpInputs.length - 1);
+                        otpInputs[lastIndex].focus();
+                        
+                        // Enable verify button
+                        verifyOtpBtn.disabled = false;
+                    }
+                });
+            });
+            
+            // Verify OTP
+            verifyOtpBtn.addEventListener('click', verifyOTP);
+            
+            // Resend OTP
+            resendOtp.addEventListener('click', resendOTP);
+            
+            // Close OTP modal
+            closeOtpModal.addEventListener('click', () => {
+                otpModal.style.display = 'none';
+                clearInterval(otpTimerInterval);
+            });
+            
+            // Back to login
+            backToLogin.addEventListener('click', () => {
+                otpModal.style.display = 'none';
+                clearInterval(otpTimerInterval);
+                resetOTPModal();
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === otpModal) {
+                    otpModal.style.display = 'none';
+                    clearInterval(otpTimerInterval);
+                    resetOTPModal();
+                }
+            });
+        }
+        
+        // Set up all event listeners
+        function setupEventListeners() {
+            // Login form
+            loginForm.addEventListener('submit', handleLogin);
+            
+            // Logout button
+            logoutBtn.addEventListener('click', handleLogout);
+            
+            // Dashboard navigation
+            navAnalyze.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('analyze');
+            });
+            
+            navHistory.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('history');
+            });
+            
+            navStrategies.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('strategies');
+            });
+            
+            navEvidence.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('evidence');
+            });
+            
+            navSettings.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('settings');
+                // Load user data into settings form
+                if (currentUser) {
+                    settingsName.value = currentUser.name || '';
+                    settingsEmail.value = currentUser.email || '';
+                }
+            });
+            
+            // Analyze button - UPDATED TO USE PERPLEXITY API
+            analyzeBtn.addEventListener('click', analyzeCaseWithAI);
+            
+            // Save settings
+            saveSettingsBtn.addEventListener('click', saveSettings);
+            
+            // Forgot password and create account modals
+            document.getElementById('forgotPassword').addEventListener('click', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                
+                if (!email) {
+                    showError('Please enter your email address first.');
+                    document.getElementById('email').focus();
+                    return;
+                }
+                
+                isPasswordReset = true;
+                showOTPModal(email);
+                
+                // Change modal title for password reset
+                document.querySelector('.otp-modal-header h3').innerHTML = '<i class="fas fa-key"></i> Reset Password';
+                document.querySelector('.otp-modal-header p').textContent = 'Enter OTP to reset your password';
+                verifyOtpBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verify & Reset Password';
+            });
+            
+            document.getElementById('createAccount').addEventListener('click', (e) => {
+                e.preventDefault();
+                createAccountModal.style.display = 'flex';
+            });
+            
+            // Close modals
+            document.getElementById('closeModal').addEventListener('click', () => {
+                forgotPasswordModal.style.display = 'none';
+            });
+            
+            document.getElementById('closeCreateModal').addEventListener('click', () => {
+                createAccountModal.style.display = 'none';
+            });
+            
+            // Send reset password
+            document.getElementById('sendResetBtn').addEventListener('click', () => {
+                const resetEmail = document.getElementById('resetEmail').value;
+                if (resetEmail) {
+                    showSuccess(`Password reset instructions sent to ${resetEmail}`);
+                    forgotPasswordModal.style.display = 'none';
+                }
+            });
+            
+            // Create account
+            document.getElementById('createAccountBtn').addEventListener('click', handleCreateAccount);
+        }
+        
+        // Handle create account
+        function handleCreateAccount() {
+            const fullName = document.getElementById('fullName').value;
+            const newEmail = document.getElementById('newEmail').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!fullName || !newEmail || !newPassword || !confirmPassword) {
+                showError('Please fill in all fields');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                showError('Passwords do not match');
+                return;
+            }
+            
+            // For demo, create user and show OTP modal
+            const userData = {
+                name: fullName,
+                email: newEmail,
+                password: newPassword,
+                joinDate: new Date().toISOString()
+            };
+            
+            // Store registration data temporarily
+            localStorage.setItem('verdictAI_pendingRegistration', JSON.stringify(userData));
+            
+            // Show OTP modal for verification
+            isPasswordReset = false;
+            showOTPModal(newEmail);
+            
+            // Change modal title for registration
+            document.querySelector('.otp-modal-header h3').innerHTML = '<i class="fas fa-user-check"></i> Verify Your Email';
+            document.querySelector('.otp-modal-header p').textContent = 'Enter OTP sent to your email to complete registration';
+            verifyOtpBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verify & Complete Registration';
+            
+            // Close create account modal
+            createAccountModal.style.display = 'none';
+            
+            // Clear form
+            document.getElementById('fullName').value = '';
+            document.getElementById('newEmail').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+        
+        // Handle login
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('remember').checked;
+            
+            if (!email || !password) {
+                showError('Please fill in all fields');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+            submitBtn.disabled = true;
+            
+            try {
+                // In a real app, this would be an API call to verify credentials
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Check if credentials are valid (demo: any non-empty password)
+                if (password.length < 1) {
+                    throw new Error('Invalid credentials');
+                }
+                
+                // Show OTP verification modal
+                isPasswordReset = false;
+                showOTPModal(email);
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('Invalid credentials. Please try again.');
+            } finally {
+                // Restore button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+        
+        // Handle logout
+        function handleLogout() {
+            currentUser = null;
+            localStorage.removeItem('verdictAI_currentUser');
+            localStorage.removeItem('verdictAI_isVerified');
+            showLoginScreen();
+        }
+        
+        // Show login screen
+        function showLoginScreen() {
+            loginScreen.style.display = 'flex';
+            dashboard.style.display = 'none';
+        }
+        
+        // Show dashboard
+        function showDashboard() {
+            loginScreen.style.display = 'none';
+            dashboard.style.display = 'flex';
+            
+            // Update user info
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.name;
+            }
+            
+            // Show analyze section by default
+            showSection('analyze');
+        }
+        
+        // Show a specific section
+        function showSection(section) {
+            // Hide all sections
+            analyzeContent.style.display = 'none';
+            historyContent.style.display = 'none';
+            strategiesContent.style.display = 'none';
+            evidenceContent.style.display = 'none';
+            settingsContent.style.display = 'none';
+            
+            // Remove active class from all nav items
+            navAnalyze.classList.remove('active');
+            navHistory.classList.remove('active');
+            navStrategies.classList.remove('active');
+            navEvidence.classList.remove('active');
+            navSettings.classList.remove('active');
+            
+            // Show selected section and activate nav item
+            switch(section) {
+                case 'analyze':
+                    analyzeContent.style.display = 'block';
+                    navAnalyze.classList.add('active');
+                    break;
+                case 'history':
+                    historyContent.style.display = 'block';
+                    navHistory.classList.add('active');
+                    updateCaseHistoryDisplay();
+                    break;
+                case 'strategies':
+                    strategiesContent.style.display = 'block';
+                    navStrategies.classList.add('active');
+                    break;
+                case 'evidence':
+                    evidenceContent.style.display = 'block';
+                    navEvidence.classList.add('active');
+                    break;
+                case 'settings':
+                    settingsContent.style.display = 'block';
+                    navSettings.classList.add('active');
+                    break;
+            }
+        }
+        
+        // Populate strategy types
+        function populateStrategyTypes() {
+            strategyTypes.innerHTML = '';
+            
+            for (const [key, data] of Object.entries(legalDatabase)) {
+                const strategyType = document.createElement('div');
+                strategyType.className = 'case-type';
+                strategyType.dataset.type = key;
+                strategyType.innerHTML = `
+                    <i class="fas fa-chess-knight"></i>
+                    <h4>${data.name}</h4>
+                    <p>${data.strategies.length} winning strategies</p>
+                `;
+                
+                strategyType.addEventListener('click', () => {
+                    // Remove active class from all
+                    document.querySelectorAll('#strategyTypes .case-type').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked
+                    strategyType.classList.add('active');
+                    
+                    // Show strategies for this type
+                    showStrategiesForType(key);
+                });
+                
+                strategyTypes.appendChild(strategyType);
+            }
+            
+            // Activate first one by default
+            if (strategyTypes.firstChild) {
+                strategyTypes.firstChild.classList.add('active');
+                showStrategiesForType(Object.keys(legalDatabase)[0]);
+            }
+        }
+        
+        // Populate evidence types
+        function populateEvidenceTypes() {
+            evidenceTypes.innerHTML = '';
+            
+            for (const [key, data] of Object.entries(legalDatabase)) {
+                const evidenceType = document.createElement('div');
+                evidenceType.className = 'case-type';
+                evidenceType.dataset.type = key;
+                evidenceType.innerHTML = `
+                    <i class="fas fa-folder"></i>
+                    <h4>${data.name}</h4>
+                    <p>${data.evidence.length} evidence types</p>
+                `;
+                
+                evidenceType.addEventListener('click', () => {
+                    // Remove active class from all
+                    document.querySelectorAll('#evidenceTypes .case-type').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked
+                    evidenceType.classList.add('active');
+                    
+                    // Show evidence guide for this type
+                    showEvidenceForType(key);
+                });
+                
+                evidenceTypes.appendChild(evidenceType);
+            }
+            
+            // Activate first one by default
+            if (evidenceTypes.firstChild) {
+                evidenceTypes.firstChild.classList.add('active');
+                showEvidenceForType(Object.keys(legalDatabase)[0]);
+            }
+        }
+        
+        // Show strategies for a specific case type
+        function showStrategiesForType(type) {
+            const data = legalDatabase[type];
+            
+            let html = `
+                <h4><i class="fas fa-chess-queen"></i> Winning Strategies for ${data.name}</h4>
+                <div class="ai-section">
+                    <div class="ai-section-title"><i class="fas fa-list-ol"></i> Key Strategies</div>
+                    <div class="ai-section-content">
+                        <ul>
+            `;
+            
+            data.strategies.forEach(strategy => {
+                html += `<li>${strategy}</li>`;
+            });
+            
+            html += `
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="ai-section">
+                    <div class="ai-section-title"><i class="fas fa-balance-scale"></i> Similar Cases Analyzed</div>
+                    <div class="ai-section-content">
+            `;
+            
+            data.similarCases.forEach(caseData => {
+                html += `
+                    <div class="similar-case">
+                        <h5>${caseData.title}</h5>
+                        <p><strong>Outcome:</strong> ${caseData.outcome}</p>
+                        <p><strong>Year:</strong> ${caseData.year}</p>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            strategyContent.innerHTML = html;
+        }
+        
+        // Show evidence guide for a specific case type
+        function showEvidenceForType(type) {
+            const data = legalDatabase[type];
+            
+            let html = `
+                <h4><i class="fas fa-folder-open"></i> Evidence Guide for ${data.name}</h4>
+                <div class="ai-section">
+                    <div class="ai-section-title"><i class="fas fa-clipboard-list"></i> Essential Evidence to Collect</div>
+                    <div class="ai-section-content">
+                        <div class="evidence-list">
+            `;
+            
+            data.evidence.forEach(evidence => {
+                html += `
+                    <div class="evidence-item">
+                        <h5><i class="fas fa-file-alt"></i> ${evidence.name}</h5>
+                        <p><strong>Importance:</strong> ${evidence.importance}</p>
+                        <p>${evidence.description}</p>
+                    </div>
+                `;
+            });
+            
+            html += `
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-section">
+                    <div class="ai-section-title"><i class="fas fa-lightbulb"></i> Evidence Collection Tips</div>
+                    <div class="ai-section-content">
+                        <ul>
+                            <li>Start collecting evidence as soon as possible - memories fade and documents get lost</li>
+                            <li>Keep all evidence organized chronologically and by category</li>
+                            <li>Make copies of all important documents - never give away originals</li>
+                            <li>Document the chain of custody for physical evidence</li>
+                            <li>Consider hiring a professional to collect certain types of evidence (e.g., forensic expert)</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            evidenceGuideContent.innerHTML = html;
+        }
+        
+        // ============================================
+        // UPDATED: Analyze Case with Perplexity API
+        // ============================================
+        async function analyzeCaseWithAI() {
+            const type = caseType.value;
+            const description = caseDescription.value;
+            const role = yourRole.value;
+            
+            if (!type || !description || !role) {
+                showError('Please fill in all case details');
+                return;
+            }
+            
+            // Show loading state
+            aiResponse.style.display = 'block';
+            responseContent.innerHTML = `
+                <div class="loading">
+                    <i class="fas fa-robot"></i>
+                    <h3>Verdict AI is analyzing your case</h3>
+                    <p>Reviewing similar cases and preparing recommendations<span class="typing"><span>.</span><span>.</span><span>.</span></span></p>
+                </div>
+            `;
+            
+            analyzeBtn.disabled = true;
+            analyzeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing with AI...';
+            
+            try {
+                // Create a comprehensive prompt for the AI
+                const prompt = `As a legal expert, analyze this case:
+
+Case Type: ${legalDatabase[type]?.name || type}
+User Role: ${role === 'plaintiff' ? 'Plaintiff (filing the case)' : 
+                       role === 'defendant' ? 'Defendant (case filed against me)' : 
+                       'Legal Representative'}
+
+Case Details:
+${description}
+
+Please provide:
+1. Case analysis summary
+2. Key legal issues identified
+3. Recommended strategies (3-5)
+4. Critical evidence to collect
+5. Similar cases and outcomes
+6. Next steps to take
+7. Potential risks and how to mitigate them
+
+Format the response in HTML with sections using h2, h3, p, ul, li tags only. Do not mention you are an AI.`;
+                
+                // Call the Perplexity API via our backend
+                const result = await askAI(prompt);
+                
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+                
+                // Display the AI response
+                responseContent.innerHTML = result.reply;
+                
+                // Create case record for history
+                const caseRecord = {
+                    id: caseIdCounter++,
+                    type: type,
+                    caseTypeName: legalDatabase[type]?.name || type,
+                    description: description.substring(0, 100) + '...',
+                    role: role,
+                    date: new Date().toISOString(),
+                    strength: 'AI Analyzed'
+                };
+                
+                // Add to history
+                caseHistory.unshift(caseRecord);
+                
+                // Save to localStorage
+                localStorage.setItem('verdictAI_caseHistory', JSON.stringify(caseHistory));
+                
+                // Update stats
+                updateStats();
+                
+                // Update case history display
+                updateCaseHistoryDisplay();
+                
+            } catch (error) {
+                console.error('Analysis error:', error);
+                responseContent.innerHTML = `
+                    <div class="ai-section">
+                        <div class="ai-section-title"><i class="fas fa-exclamation-triangle"></i> Analysis Error</div>
+                        <div class="ai-section-content">
+                            <p>Unable to analyze case via AI. Error: ${error.message}</p>
+                            <p>Trying fallback analysis...</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Fallback to local analysis
+                setTimeout(() => {
+                    generateLocalAIResponse(type, description, role);
+                }, 1000);
+            } finally {
+                analyzeBtn.disabled = false;
+                analyzeBtn.innerHTML = '<i class="fas fa-robot"></i> Analyze Case with Verdict AI';
+            }
+        }
+        
+        // Fallback function if API fails
+        function generateLocalAIResponse(type, description, role) {
+            const caseData = legalDatabase[type] || legalDatabase.civil;
+            const roleText = role === 'plaintiff' ? 'Plaintiff (filing the case)' : 
+                            role === 'defendant' ? 'Defendant (case filed against you)' : 
+                            'Legal Representative';
+            
+            const descriptionLength = description.length;
+            let caseStrength = 'Medium';
+            if (descriptionLength > 500) caseStrength = 'Strong';
+            if (descriptionLength < 200) caseStrength = 'Weak';
+            
+            const recommendations = generateRecommendations(type, role, caseStrength);
+            
+            let html = `
+                <div class="ai-section">
+                    <div class="ai-section-title"><i class="fas fa-chart-line"></i> Case Analysis Summary</div>
+                    <div class="ai-section-content">
+                        <p><strong>Case Type:</strong> ${caseData.name}</p>
+                        <p><strong>Your Role:</strong> ${roleText}</p>
+                        <p><strong>Case Strength Assessment:</strong> <span style="color: ${caseStrength === 'Strong' ? '#4CAF50' : caseStrength === 'Medium' ? '#FF9800' : '#F44336'}">${caseStrength}</span></p>
+                        <p><strong>Key Issue Identified:</strong> ${identifyKeyIssue(description)}</p>
+                    </div>
+                </div>
+                
+                <div class="ai-section">
+                    <div class="ai-section-title"><i class="fas fa-chess"></i> Recommended Strategies</div>
+                    <div class="ai-section-content">
+                        <ul>
+            `;
+            
+            recommendations.strategies.forEach(strategy => {
+                html += `<li>${strategy}</li>`;
+            });
+            
+            html += `
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="ai-section">
+                    <div class="ai-section-title"><i class="fas fa-clipboard-check"></i> Critical Evidence to Collect</div>
+                    <div class="ai-section-content">
+                        <div class="evidence-list">
+            `;
+            
+            caseData.evidence.slice(0, 4).forEach(evidence => {
+                html += `
+                    <div class="evidence-item">
+                        <h5><i class="fas fa-file-alt"></i> ${evidence.name}</h5>
+                        <p><strong>Priority:</strong> ${evidence.importance}</p>
+                        <p>${evidence.description}</p>
+                    </div>
+                `;
+            });
+            
+            html += `
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-section">
+                    <div class="ai-section-title"><i class="fas fa-balance-scale"></i> Similar Cases & Outcomes</div>
+                    <div class="ai-section-content">
+            `;
+            
+            caseData.similarCases.forEach(caseExample => {
+                html += `
+                    <div class="similar-case">
+                        <h5>${caseExample.title}</h5>
+                        <p><strong>Outcome:</strong> ${caseExample.outcome}</p>
+                        <p><strong>Year:</strong> ${caseExample.year}</p>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                </div>
+                
+                <div class="ai-section">
+                    <div class="ai-section-title"><i class="fas fa-forward"></i> Next Steps</div>
+                    <div class="ai-section-content">
+                        <ul>
+                            <li>${recommendations.nextSteps[0]}</li>
+                            <li>${recommendations.nextSteps[1]}</li>
+                            <li>${recommendations.nextSteps[2]}</li>
+                        </ul>
+                        <p style="margin-top: 15px; color: #4a9eff;"><i class="fas fa-exclamation-circle"></i> <strong>Disclaimer:</strong> This analysis is for informational purposes only and does not constitute legal advice. Consult with a qualified attorney for your specific situation.</p>
+                    </div>
+                </div>
+            `;
+            
+            responseContent.innerHTML = html;
+        }
+        
+        // Generate recommendations based on case type and role
+        function generateRecommendations(type, role, strength) {
+            const strategies = [];
+            const nextSteps = [];
+            
+            // Common strategies for all cases
+            strategies.push("Document everything - keep detailed records of all interactions");
+            strategies.push("Consult with a specialized attorney in this area of law");
+            
+            // Role-specific strategies
+            if (role === 'plaintiff') {
+                strategies.push("Send a formal demand letter before filing suit");
+                strategies.push("Calculate exact damages with supporting documentation");
+                nextSteps.push("Send a formal notice to the opposing party");
+                nextSteps.push("File the complaint within the statute of limitations");
+            } else if (role === 'defendant') {
+                strategies.push("Respond to any notices or complaints within required timeframes");
+                strategies.push("Preserve all evidence that might help your defense");
+                nextSteps.push("Prepare a formal response to the complaint");
+                nextSteps.push("Consider filing counterclaims if applicable");
+            }
+            
+            // Strength-specific strategies
+            if (strength === 'Strong') {
+                strategies.push("Consider pursuing aggressive litigation strategy");
+                strategies.push("Prepare for possible settlement negotiations from a position of strength");
+                nextSteps.push("Begin drafting formal legal documents");
+            } else if (strength === 'Weak') {
+                strategies.push("Focus on settlement or alternative dispute resolution");
+                strategies.push("Consider strengthening your case with additional evidence before proceeding");
+                nextSteps.push("Explore mediation or arbitration options");
+            }
+            
+            // Type-specific strategies
+            if (type === 'civil') {
+                strategies.push("Focus on proving breach of duty or contract terms");
+                nextSteps.push("Gather all contract-related documents and communications");
+            } else if (type === 'criminal') {
+                strategies.push("Protect your constitutional rights - don't speak to authorities without counsel");
+                nextSteps.push("Immediately seek representation from a criminal defense attorney");
+            } else if (type === 'family') {
+                strategies.push("Prioritize the best interests of any children involved");
+                nextSteps.push("Document all parenting time and financial contributions");
+            }
+            
+            // Additional next steps
+            nextSteps.push("Schedule a consultation with an attorney specializing in this area");
+            nextSteps.push("Organize all evidence chronologically in a secure location");
+            
+            return { strategies, nextSteps };
+        }
+        
+        // Identify key issue from description
+        function identifyKeyIssue(description) {
+            const lowerDesc = description.toLowerCase();
+            
+            if (lowerDesc.includes('contract') || lowerDesc.includes('agreement')) {
+                return "Contract interpretation and breach analysis";
+            } else if (lowerDesc.includes('money') || lowerDesc.includes('payment') || lowerDesc.includes('damage')) {
+                return "Financial compensation and damages calculation";
+            } else if (lowerDesc.includes('child') || lowerDesc.includes('custody') || lowerDesc.includes('parent')) {
+                return "Child custody and parenting arrangements";
+            } else if (lowerDesc.includes('property') || lowerDesc.includes('land') || lowerDesc.includes('house')) {
+                return "Property rights and ownership dispute";
+            } else if (lowerDesc.includes('injury') || lowerDesc.includes('accident') || lowerDesc.includes('hurt')) {
+                return "Personal injury and liability determination";
+            } else {
+                return "Legal rights and responsibilities analysis";
+            }
+        }
+        
+        // Update case history display
+        function updateCaseHistoryDisplay() {
+            caseHistoryList.innerHTML = '';
+            
+            if (caseHistory.length === 0) {
+                caseHistoryList.innerHTML = '<p style="color: #a0c8ff; text-align: center;">No cases analyzed yet. Use the Analyze Case section to get started.</p>';
+                return;
+            }
+            
+            caseHistory.forEach(caseRecord => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                
+                const date = new Date(caseRecord.date);
+                const formattedDate = date.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                
+                historyItem.innerHTML = `
+                    <div class="history-info">
+                        <h5>${caseRecord.caseTypeName}</h5>
+                        <p>${caseRecord.description}</p>
+                        <p><strong>Role:</strong> ${caseRecord.role} | <strong>Strength:</strong> ${caseRecord.strength}</p>
+                    </div>
+                    <div class="history-date">${formattedDate}</div>
+                `;
+                
+                historyItem.addEventListener('click', () => {
+                    alert(`Case ID: ${caseRecord.id}\nType: ${caseRecord.caseTypeName}\nDate: ${formattedDate}\nStrength: ${caseRecord.strength}\n\nClick "Analyze Case" to generate a new analysis.`);
+                });
+                
+                caseHistoryList.appendChild(historyItem);
+            });
+        }
+        
+        // Save settings
+        function saveSettings() {
+            const name = settingsName.value;
+            const email = settingsEmail.value;
+            
+            if (!name || !email) {
+                showError('Please fill in all fields');
+                return;
+            }
+            
+            if (currentUser) {
+                currentUser.name = name;
+                currentUser.email = email;
+                localStorage.setItem('verdictAI_currentUser', JSON.stringify(currentUser));
+                
+                // Update displayed name
+                document.getElementById('userName').textContent = name;
+                
+                showSuccess('Settings saved successfully!');
+            }
+        }
+        
+        // Animate stats counting up
+        function animateStats() {
+            const totalCases = 12847;
+            const successRate = 87;
+            const todayCases = 143;
+            
+            let totalCount = 0;
+            let successCount = 0;
+            let todayCount = 0;
+            
+            const totalInterval = setInterval(() => {
+                totalCount += Math.ceil(totalCases / 50);
+                if (totalCount >= totalCases) {
+                    totalCount = totalCases;
+                    clearInterval(totalInterval);
+                }
+                totalCasesEl.textContent = totalCount.toLocaleString();
+            }, 30);
+            
+            const successInterval = setInterval(() => {
+                successCount += 2;
+                if (successCount >= successRate) {
+                    successCount = successRate;
+                    clearInterval(successInterval);
+                }
+                successRateEl.textContent = successCount + '%';
+            }, 40);
+            
+            const todayInterval = setInterval(() => {
+                todayCount += 3;
+                if (todayCount >= todayCases) {
+                    todayCount = todayCases;
+                    clearInterval(todayInterval);
+                }
+                todayCasesEl.textContent = todayCount;
+            }, 20);
+        }
+        
+        // Update stats with new case
+        function updateStats() {
+            // Increment total cases
+            let currentTotal = parseInt(totalCasesEl.textContent.replace(/,/g, ''));
+            totalCasesEl.textContent = (currentTotal + 1).toLocaleString();
+            
+            // Increment today's cases
+            let currentToday = parseInt(todayCasesEl.textContent);
+            todayCasesEl.textContent = currentToday + 1;
+            
+            // Small random success rate fluctuation
+            const currentSuccessRate = parseInt(successRateEl.textContent);
+            const fluctuation = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
+            const newRate = Math.max(80, Math.min(95, currentSuccessRate + fluctuation));
+            successRateEl.textContent = newRate + '%';
+        }
+        
+        // ============================================
+        // OTP Functions
+        // ============================================
+        function generateOTP() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+        
+        function sendOTPEmail(email, otp) {
+            console.log(`[Mock] Sending OTP to ${email}: ${otp}`);
+            
+            // For demo purposes
+            alert(`DEMO: OTP sent to ${email}: ${otp}\n\nIn production, this would be sent via email using the template you provided.`);
+            
+            return true;
+        }
+        
+        function showOTPModal(email) {
+            userEmailForOtp = email;
+            currentOtp = generateOTP();
+            
+            // Send OTP (in production, this would be via backend API)
+            const emailSent = sendOTPEmail(email, currentOtp);
+            
+            if (emailSent) {
+                // Reset OTP inputs
+                otpInputs.forEach(input => {
+                    input.value = '';
+                    input.classList.remove('filled');
+                });
+                
+                // Focus first input
+                otpInputs[0].focus();
+                
+                // Set expiry time (10 minutes from now)
+                otpExpiryTime = new Date().getTime() + 10 * 60 * 1000;
+                
+                // Start timer
+                startOTPTimer();
+                
+                // Reset resend state
+                canResendOtp = false;
+                resendOtp.classList.add('disabled');
+                
+                // Show modal
+                otpModal.style.display = 'flex';
+                
+                // Hide success message if shown
+                otpVerified.style.display = 'none';
+                
+                // Reset verify button
+                verifyOtpBtn.disabled = true;
+                verifyOtpBtn.style.background = '';
+            }
+        }
+        
+        function startOTPTimer() {
+            clearInterval(otpTimerInterval);
+            
+            otpTimerInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = otpExpiryTime - now;
+                
+                if (distance <= 0) {
+                    clearInterval(otpTimerInterval);
+                    timerDisplay.textContent = '00:00';
+                    otpTimer.classList.add('expiring');
+                    canResendOtp = true;
+                    resendOtp.classList.remove('disabled');
+                    return;
+                }
+                
+                // Calculate minutes and seconds
+                const minutes = Math.floor(distance / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                // Display the result
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Add warning class when less than 2 minutes
+                if (minutes < 2) {
+                    otpTimer.classList.add('expiring');
+                }
+            }, 1000);
+        }
+        
+        function verifyOTP() {
+            const enteredOtp = Array.from(otpInputs).map(input => input.value).join('');
+            
+            // Check if OTP is expired
+            const now = new Date().getTime();
+            if (now > otpExpiryTime) {
+                showError('OTP has expired. Please request a new one.');
+                return;
+            }
+            
+            // Verify OTP
+            if (enteredOtp === currentOtp) {
+                // OTP is correct
+                otpVerified.style.display = 'block';
+                verifyOtpBtn.innerHTML = '<i class="fas fa-check"></i> Verified!';
+                verifyOtpBtn.disabled = true;
+                verifyOtpBtn.style.background = '#4CAF50';
+                
+                // Clear timer
+                clearInterval(otpTimerInterval);
+                
+                // Hide OTP modal after delay
+                setTimeout(() => {
+                    otpModal.style.display = 'none';
+                    
+                    // Handle based on context
+                    if (isPasswordReset) {
+                        handlePasswordReset();
+                    } else {
+                        completeLoginOrRegistration();
+                    }
+                    
+                    // Reset OTP modal
+                    setTimeout(() => {
+                        otpVerified.style.display = 'none';
+                        verifyOtpBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verify OTP';
+                        verifyOtpBtn.disabled = true;
+                        verifyOtpBtn.style.background = '';
+                        resetOTPModal();
+                    }, 2000);
+                }, 1500);
+            } else {
+                // OTP is incorrect
+                showError('Invalid OTP. Please try again.');
+                
+                // Clear inputs
+                otpInputs.forEach(input => {
+                    input.value = '';
+                    input.classList.remove('filled');
+                });
+                
+                // Focus first input
+                otpInputs[0].focus();
+                verifyOtpBtn.disabled = true;
+            }
+        }
+        
+        function resendOTP() {
+            if (!canResendOtp) return;
+            
+            if (!userEmailForOtp) {
+                showError('Please enter your email first.');
+                return;
+            }
+            
+            // Generate and send new OTP
+            currentOtp = generateOTP();
+            sendOTPEmail(userEmailForOtp, currentOtp);
+            
+            // Reset timer (10 minutes)
+            otpExpiryTime = new Date().getTime() + 10 * 60 * 1000;
+            startOTPTimer();
+            
+            // Clear inputs
+            otpInputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('filled');
+            });
+            
+            // Focus first input
+            otpInputs[0].focus();
+            verifyOtpBtn.disabled = true;
+            
+            // Disable resend button for 30 seconds
+            canResendOtp = false;
+            resendOtp.classList.add('disabled');
+            
+            setTimeout(() => {
+                canResendOtp = true;
+                resendOtp.classList.remove('disabled');
+            }, 30000);
+            
+            showSuccess('New OTP has been sent to your email.');
+        }
+        
+        function resetOTPModal() {
+            // Reset modal to default state
+            document.querySelector('.otp-modal-header h3').innerHTML = '<i class="fas fa-shield-alt"></i> OTP Verification';
+            document.querySelector('.otp-modal-header p').textContent = 'Enter the 6-digit code sent to your email';
+            verifyOtpBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verify OTP';
+            isPasswordReset = false;
+        }
+        
+        function completeLoginOrRegistration() {
+            const pendingRegistration = localStorage.getItem('verdictAI_pendingRegistration');
+            
+            if (pendingRegistration) {
+                // This is a registration
+                const userData = JSON.parse(pendingRegistration);
+                
+                currentUser = {
+                    name: userData.name,
+                    email: userData.email,
+                    joinDate: new Date().toISOString(),
+                    isVerified: true
+                };
+                
+                // Save user
+                localStorage.setItem('verdictAI_currentUser', JSON.stringify(currentUser));
+                localStorage.setItem('verdictAI_isVerified', 'true');
+                localStorage.removeItem('verdictAI_pendingRegistration');
+                
+                showSuccess('Registration successful! Welcome to Verdict AI.');
+                setTimeout(() => {
+                    showDashboard();
+                }, 1000);
+            } else {
+                // This is a login
+                const password = document.getElementById('password').value;
+                const rememberMe = document.getElementById('remember').checked;
+                
+                currentUser = {
+                    name: userEmailForOtp.split('@')[0],
+                    email: userEmailForOtp,
+                    joinDate: new Date().toISOString(),
+                    isVerified: true
+                };
+                
+                // Save user data
+                localStorage.setItem('verdictAI_currentUser', JSON.stringify(currentUser));
+                localStorage.setItem('verdictAI_rememberMe', rememberMe);
+                localStorage.setItem('verdictAI_isVerified', 'true');
+                
+                showSuccess('Login successful! Email verified.');
+                
+                // Show dashboard
+                setTimeout(() => {
+                    showDashboard();
+                    
+                    // Reset form
+                    loginForm.reset();
+                }, 1000);
+            }
+        }
+        
+        function handlePasswordReset() {
+            showSuccess('OTP verified! Password reset instructions sent to your email.');
+            // In a real app, this would redirect to password reset page
+            resetOTPModal();
+        }
+        
+        // ============================================
+        // Utility Functions
+        // ============================================
+        
+        // Notification functions
+        function showError(message) {
+            showNotification(message, 'error');
+        }
+        
+        function showSuccess(message) {
+            showNotification(message, 'success');
+        }
+        
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas ${type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, type === 'error' ? 5000 : 3000);
+        }
+        
+        // Initialize the app when page loads
+        window.addEventListener('load', initApp);
+    </script>
 </body>
 </html>
