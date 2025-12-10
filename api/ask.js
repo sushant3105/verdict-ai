@@ -1,13 +1,15 @@
-// /api/ask.js  – Vercel serverless function using OpenRouter
+// /api/ask.js  -- CommonJS version for Vercel
 
-export default async function handler(req, res) {
+const fetch = require("node-fetch");
+
+module.exports = async (req, res) => {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: "Missing OPENROUTER_API_KEY on server" });
+    return res.status(500).json({ error: "Missing OPENROUTER_API_KEY" });
   }
 
   const { prompt } = req.body || {};
@@ -21,10 +23,8 @@ export default async function handler(req, res) {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
-
-        // Optional but recommended so OpenRouter can show your app name + origin
-        "HTTP-Referer": "https://your-vercel-app-url.vercel.app", // change to your deployed URL
-        "X-Title": "Verdict AI – Legal Advisor",
+        "HTTP-Referer": "https://your-app.vercel.app",
+        "X-Title": "Verdict AI"
       },
       body: JSON.stringify({
         model: "meta-llama/llama-3.1-8b-instruct:free",
@@ -32,58 +32,30 @@ export default async function handler(req, res) {
           {
             role: "system",
             content:
-              "You are an expert legal advisor. " +
-              "Give clear, practical, structured legal guidance. " +
-              "Do NOT mention AI or that you are a model. " +
-              "Answer as if you are a human legal professional.\n\n" +
-              "VERY IMPORTANT: Return the answer as valid HTML ONLY. " +
-              "Do NOT use Markdown. Do NOT use asterisks (* or **). " +
-              "Use only these tags: <h2>, <h3>, <p>, <ul>, <ol>, <li>, <strong>, <em>, <br>.\n\n" +
-              "FORMAT:\n" +
-              "<h2>Summary</h2>\n" +
-              "<p>2–3 sentence summary of the situation and main priorities.</p>\n" +
-              "<h2>Immediate Actions</h2>\n" +
-              "<ul><li>Action step…</li></ul>\n" +
-              "<h2>Legal Considerations</h2>\n" +
-              "<ul><li>Key legal point…</li></ul>\n" +
-              "<h2>What to Document</h2>\n" +
-              "<ul><li>Evidence to collect…</li></ul>\n" +
-              "<h2>When to Contact a Lawyer</h2>\n" +
-              "<ul><li>Situation where a lawyer is recommended…</li></ul>\n" +
-              "<h2>Additional Tips</h2>\n" +
-              "<ul><li>Extra practical advice…</li></ul>\n\n" +
-              "Now write the full HTML answer for this situation:",
+              "Return valid HTML ONLY. No markdown. Use <h2>, <h3>, <p>, <ul>, <li>, <strong>."
           },
           {
             role: "user",
-            content: prompt,
-          },
-        ],
-      }),
+            content: prompt
+          }
+        ]
+      })
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("OpenRouter error:", data);
+      console.error("OpenRouter Error Response:", data);
       return res.status(response.status).json({
-        error:
-          data.error?.message ||
-          data.error ||
-          `OpenRouter API error (status ${response.status})`,
+        error: data.error?.message || "OpenRouter API error"
       });
     }
 
-    const aiText =
-      data.choices?.[0]?.message?.content?.trim() ||
-      "No response from AI.";
+    const reply = data.choices?.[0]?.message?.content || "No response.";
+    return res.status(200).json({ reply });
 
-    // Keep the same response shape your frontend expects
-    return res.status(200).json({ reply: aiText });
   } catch (err) {
     console.error("Server error:", err);
-    return res
-      .status(500)
-      .json({ error: "Server error while calling OpenRouter" });
+    return res.status(500).json({ error: "Server error while calling OpenRouter" });
   }
-}
+};
