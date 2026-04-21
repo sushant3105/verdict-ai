@@ -59,7 +59,7 @@ verdict-ai/
 
 ## Collaborators
 
-- **Sushant** (`sushant3105`)
+- **Sushant**
 - **Vedant Khare**
 
 ## Note
